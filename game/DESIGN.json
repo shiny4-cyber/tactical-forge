@@ -1,0 +1,67 @@
+{
+  "game": "CINDER YARD",
+  "map": "KILN NINE",
+  "genre": "round-based tactical first-person shooter in the Counter-Strike style; original map, art and names",
+  "engine": "three.js 0.187.0 vendored, plain ES modules, no build step, no network at runtime",
+  "premise": "Two crews fight over a brick kiln works. PACKERS carry a cinder charge to site A or B; WARDENS hold the sites and defuse. First to five rounds.",
+  "controls": {
+    "move": "W A S D, with acceleration and friction",
+    "look": "mouse under pointer lock",
+    "fire": "left mouse (automatic on rifle and SMG)",
+    "reload": "R",
+    "crouch": "Ctrl or C, tighter spread",
+    "walk": "Shift, quiet and accurate",
+    "jump": "Space",
+    "buy": "B in the buy phase, then 1-6 or a click",
+    "objective": "hold E: plant as a Packer, defuse as a Warden",
+    "grenade": "G, one PITCH frag a round",
+    "mute": "M"
+  },
+  "systems": {
+    "loop": "main.js runs a fixed 60 Hz step with an accumulator and renders once per frame; rendering only reads state",
+    "movement": "player.js: acceleration, friction, crouch with stand-up check, jump, gravity, axis-separated collision, crate tops landable",
+    "gunplay": "combat.js: four weapons, spread growing with speed and shrinking crouched, recoil that recovers, headshot multiplier, armour soaks half a hit",
+    "hits": "hitscan rays against head, body and leg boxes; a wall always wins; bot damage is scaled so a bot cannot one-shot through a door",
+    "navigation": "nav.js: authored door, lane and hold nodes plus a 3 m walkable lattice, edges only where a body fits, A* with a binary heap and reused scratch",
+    "bots": "bots.js: advance, hold, engage, investigate, reload, plant, defuse; hearing with a noise memory and a give-up deadline, burst fire with an accuracy ramp, cover while reloading, a sideways detour when a re-path repeats",
+    "objective": "match.js: 3.2 s plant on a site radius, 40 s fuse, one 10 s defuse that resets on release or interruption, wins by detonation, defuse, elimination or time",
+    "economy": "start $800; kill $300, plant $300, win $3250, loss $1400 rising to $3400; six items, buying closed after the buy phase",
+    "rounds": "12 s buy, 100 s live, 6 s result, first to five, then restart",
+    "hud": "hud.js: health, armour, money, weapon, ammo, round, clock, score, phase, objective, bomb fuse, kill feed, hit marker, buy menu, banners",
+    "audio": "audio.js: synthesised shots, reload, hit, headshot, explosion, plant, defuse, win and lose cues",
+    "look": "render/: canvas textures, gradient sky, dusk sun with shadows, lamps, lane stripes, site decals, signs, first-person rifle, pooled tracers, impacts, blood, explosions"
+  },
+  "map": {
+    "size": "48 x 40 m, two lanes around a solid kiln block, a north corridor for rotates",
+    "site_a": "KILN FLOOR: roofed brick building, south and east doors, three crate stacks",
+    "site_b": "CISTERN YARD: open steel pen, south and west mouths, a cistern tank and a low wall",
+    "palette": "warm brick against cool steel, amber site decals and lane stripes, dusk sky that never renders black"
+  },
+  "file_map": {
+    "game/index.html": "import map, HUD markup, link to the stylesheet",
+    "game/style.css": "the whole look plan in one stylesheet",
+    "game/src/map.js": "boxes, lamps, signs, nav nodes, spawns, sites",
+    "game/src/collision.js": "box world, movement, rays, walkability",
+    "game/src/nav.js": "graph build, snapping, A*",
+    "game/src/combat.js": "weapon table, spread, hit scan, damage, blast",
+    "game/src/arsenal.js": "magazine, reserve, cooldown, reload",
+    "game/src/player.js": "player movement and recoil",
+    "game/src/bots.js": "bot brains and steering",
+    "game/src/match.js": "round clock, score, economy, bomb",
+    "game/src/sim.js": "the fixed step that ties the systems together and emits events",
+    "game/src/hud.js": "DOM HUD",
+    "game/src/input.js": "keyboard, mouse, pointer lock",
+    "game/src/audio.js": "synthesised cues",
+    "game/src/render/": "world, textures, actors, effects, props",
+    "tests/logic.test.mjs": "headless simulation tests",
+    "tests/browser.py": "Playwright and Firefox end-to-end tests",
+    "tools/capture.py": "captures the screenshots from the running game",
+    "tools/imagecheck.py": "decodes each screenshot and checks size and brightness"
+  },
+  "test_hooks": {
+    "why": "the judge never runs the game, so the tests and captures drive the same calls the loop makes",
+    "__debug": "phase, clock, score, player, ammo, bomb, bots, stats, last result",
+    "__advance __tp __fire __buy __plant __defuse __armBomb": "step time, move the player, shoot, buy, hold the objective key, arm a fixture charge",
+    "__view __hudText": "a 3x3 ray probe of the frame, and the HUD's rendered strings"
+  }
+}

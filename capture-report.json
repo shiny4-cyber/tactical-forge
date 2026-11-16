@@ -1,0 +1,74 @@
+{
+  "errors": [],
+  "failures": [],
+  "shots": [
+    {
+      "bytes": 85907,
+      "file": "1-cover.jpg",
+      "hud": {
+        "ammo": 24,
+        "draw_calls": 225,
+        "hp": 100,
+        "phase": "live",
+        "score": {
+          "attackers": 2,
+          "defenders": 1
+        },
+        "timer": 78,
+        "triangles": 9654
+      },
+      "shot": "cover"
+    },
+    {
+      "bytes": 78829,
+      "file": "2-fire.jpg",
+      "hud": {
+        "ammo": 23,
+        "draw_calls": 181,
+        "hp": 100,
+        "phase": "live",
+        "score": {
+          "attackers": 2,
+          "defenders": 1
+        },
+        "timer": 78,
+        "triangles": 7802
+      },
+      "shot": "fire"
+    },
+    {
+      "bytes": 73271,
+      "file": "3-plant.jpg",
+      "hud": {
+        "ammo": 24,
+        "draw_calls": 164,
+        "hp": 100,
+        "phase": "live",
+        "score": {
+          "attackers": 2,
+          "defenders": 1
+        },
+        "timer": 78,
+        "triangles": 7594
+      },
+      "shot": "plant"
+    },
+    {
+      "bytes": 67980,
+      "file": "4-buy.jpg",
+      "hud": {
+        "ammo": 24,
+        "draw_calls": 203,
+        "hp": 100,
+        "phase": "buy",
+        "score": {
+          "attackers": 0,
+          "defenders": 0
+        },
+        "timer": 9,
+        "triangles": 8156
+      },
+      "shot": "buy"
+    }
+  ]
+}

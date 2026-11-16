@@ -1,0 +1,122 @@
+  :root {
+    --night: #1b1d21;
+    --panel: #23262b;
+    --line: #3a3f46;
+    --ink: #f2ede2;
+    --muted: #a7a29a;
+    --amber: #ffb257;
+    --steel: #8fa2ab;
+    --packers: #ff9a3c;
+    --wardens: #6fd3e2;
+    --danger: #e8543f;
+    --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-num: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden;
+    background: var(--night); color: var(--ink);
+    font-family: var(--font-ui);
+    user-select: none;
+  }
+  #game, #game canvas { position: fixed; inset: 0; display: block; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  .topbar {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: stretch; gap: 2px;
+    font-family: var(--font-num);
+    background: color-mix(in srgb, var(--night) 78%, transparent);
+    border: 1px solid var(--line); border-radius: 6px;
+    overflow: hidden;
+  }
+  .topbar > div { padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+  .topbar .team { font-weight: 700; letter-spacing: 0.06em; font-size: 12px; }
+  .topbar .packers { color: var(--packers); }
+  .topbar .wardens { color: var(--wardens); }
+  .topbar .score { font-size: 22px; color: var(--ink); min-width: 2ch; text-align: center; }
+  #hud-timer { font-size: 22px; font-weight: 600; letter-spacing: 0.02em; min-width: 4ch; text-align: center; }
+  .topbar .chip { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; }
+  #hud-phase { color: var(--amber); }
+  .leftcol { position: fixed; top: 18px; left: 18px; display: grid; gap: 6px; max-width: 34ch; }
+  .leftcol .row { font-family: var(--font-num); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); }
+  #hud-objective { color: var(--ink); }
+  .bomb { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.08em; padding: 4px 8px; border: 1px solid var(--line); border-radius: 4px; background: color-mix(in srgb, var(--night) 70%, transparent); }
+  .bomb.danger { color: var(--danger); border-color: var(--danger); animation: pulse 0.9s infinite; }
+  .bomb.warn { color: var(--amber); border-color: var(--amber); }
+  .bomb.carry { color: var(--wardens); border-color: var(--wardens); }
+  @keyframes pulse { 50% { opacity: 0.45; } }
+  #crosshair { position: fixed; left: 50%; top: 50%; width: 40px; height: 40px; transform: translate(-50%, -50%); --gap: 6px; }
+  #crosshair i { position: absolute; background: var(--ink); opacity: 0.9; box-shadow: 0 0 2px #000; }
+  #crosshair i:nth-child(1) { left: 19px; top: calc(20px - var(--gap) - 7px); width: 2px; height: 7px; }
+  #crosshair i:nth-child(2) { left: 19px; top: calc(20px + var(--gap)); width: 2px; height: 7px; }
+  #crosshair i:nth-child(3) { top: 19px; left: calc(20px - var(--gap) - 7px); height: 2px; width: 7px; }
+  #crosshair i:nth-child(4) { top: 19px; left: calc(20px + var(--gap)); height: 2px; width: 7px; }
+  #hitmarker { position: fixed; left: 50%; top: 50%; width: 28px; height: 28px; transform: translate(-50%, -50%) rotate(45deg); opacity: 0; transition: opacity 70ms linear; }
+  #hitmarker.on { opacity: 1; }
+  #hitmarker i { position: absolute; background: var(--ink); }
+  #hitmarker.kill i { background: var(--danger); }
+  #hitmarker i:nth-child(1) { left: 13px; top: 0; width: 2px; height: 9px; }
+  #hitmarker i:nth-child(2) { left: 13px; bottom: 0; width: 2px; height: 9px; }
+  #hitmarker i:nth-child(3) { top: 13px; left: 0; height: 2px; width: 9px; }
+  #hitmarker i:nth-child(4) { top: 13px; right: 0; height: 2px; width: 9px; }
+  #vignette { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity 160ms linear;
+    background: radial-gradient(ellipse at center, transparent 42%, rgba(160, 30, 20, 0.85) 100%); }
+  #vignette.hit { background: radial-gradient(ellipse at center, transparent 30%, rgba(220, 40, 25, 0.9) 100%); }
+  .vitals { position: fixed; left: 22px; bottom: 20px; display: grid; gap: 6px; width: 240px; }
+  .bar { height: 12px; background: color-mix(in srgb, var(--night) 75%, transparent); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 100%; transition: width 120ms linear; }
+  #hud-health-fill { background: linear-gradient(90deg, #79c98a, #b9d98a); }
+  #hud-health-fill.low { background: linear-gradient(90deg, #e8543f, #ff9a3c); }
+  #hud-armor-fill { background: linear-gradient(90deg, #6fd3e2, #8fa2ab); }
+  .vitals .labels { display: flex; justify-content: space-between; font-family: var(--font-num); font-size: 12px; color: var(--muted); }
+  .vitals .labels b { color: var(--ink); font-weight: 600; }
+  #hud-money { font-family: var(--font-num); font-size: 20px; color: var(--amber); letter-spacing: 0.02em; }
+  #hud-stats { font-family: var(--font-num); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+  .gunbox { position: fixed; right: 24px; bottom: 18px; text-align: right; }
+  #hud-weapon { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.22em; color: var(--muted); }
+  #hud-ammo { font-family: var(--font-num); font-size: 52px; line-height: 1; letter-spacing: -0.03em; }
+  #hud-ammo.empty #hud-mag { color: var(--danger); }
+  #hud-ammo.reloading #hud-mag { opacity: 0.45; }
+  #hud-reserve { font-size: 16px; color: var(--muted); margin-left: 6px; }
+  #hud-feed { position: fixed; right: 20px; top: 76px; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; justify-items: end; font-family: var(--font-num); font-size: 12px; color: var(--muted); }
+  #hud-feed li { background: color-mix(in srgb, var(--night) 70%, transparent); border: 1px solid var(--line); border-radius: 3px; padding: 3px 7px; }
+  #hud-feed b { color: var(--ink); }
+  #hud-feed span { color: var(--amber); font-size: 10px; letter-spacing: 0.08em; }
+  #hud-feed.pulse { animation: feedpulse 220ms ease-out; }
+  @keyframes feedpulse { from { opacity: 0.4; } to { opacity: 1; } }
+  #banner { position: fixed; left: 50%; top: 28%; transform: translateX(-50%); text-align: center; padding: 14px 26px;
+    background: color-mix(in srgb, var(--night) 82%, transparent); border: 1px solid var(--line); border-radius: 6px; }
+  #banner-title { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: 0.06em; }
+  #banner-copy { margin: 6px 0 0; font-family: var(--font-num); font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+  #dead { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(12, 10, 9, 0.45); }
+  #dead h2 { font-size: 34px; letter-spacing: 0.14em; margin: 0; color: var(--danger); }
+  #dead p { font-family: var(--font-num); font-size: 12px; letter-spacing: 0.12em; color: var(--muted); margin: 8px 0 0; }
+  #buy { position: fixed; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--night) 55%, transparent); pointer-events: auto; }
+  #buy .panel { width: min(560px, 92vw); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; }
+  #buy header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  #buy h2 { margin: 0; font-size: 18px; letter-spacing: 0.16em; }
+  #buy-money { font-family: var(--font-num); font-size: 20px; color: var(--amber); }
+  #buy-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  #buy-list li { display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px;
+    background: #1d2024; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; }
+  #buy-list li:hover { border-color: var(--amber); }
+  #buy-list li.unaffordable { opacity: 0.42; }
+  #buy-list .key { font-family: var(--font-num); color: var(--muted); font-size: 12px; }
+  #buy-list .name { font-weight: 600; letter-spacing: 0.04em; }
+  #buy-list .hint { display: block; font-family: var(--font-num); font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  #buy-list .price { font-family: var(--font-num); color: var(--amber); }
+  #buy footer { margin-top: 12px; font-family: var(--font-num); font-size: 11px; letter-spacing: 0.08em; color: var(--muted); }
+  #start { position: fixed; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--night) 72%, transparent); pointer-events: auto; }
+  #start .panel { width: min(520px, 92vw); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 26px 28px; }
+  #start h1 { margin: 0; font-size: 40px; letter-spacing: 0.08em; line-height: 1.05; }
+  #start .sub { margin: 6px 0 14px; font-family: var(--font-num); font-size: 12px; letter-spacing: 0.16em; color: var(--amber); }
+  #start-copy { margin: 0 0 16px; color: var(--muted); line-height: 1.5; font-size: 14px; }
+  .sides { display: flex; gap: 8px; margin-bottom: 16px; }
+  .sides button { flex: 1; padding: 10px; background: #1d2024; color: var(--ink); border: 1px solid var(--line); border-radius: 5px; font: inherit; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; }
+  .sides button.active { border-color: var(--amber); color: var(--amber); }
+  #start-button { width: 100%; padding: 12px; background: var(--amber); color: #201a12; border: 0; border-radius: 6px; font: inherit; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; }
+  #start-button:hover { background: #ffd9a0; }
+  .keys { margin: 16px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+  .keys li { display: flex; gap: 8px; align-items: center; }
+  .keys kbd { font-family: var(--font-num); font-size: 11px; border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; color: var(--ink); min-width: 22px; text-align: center; }
+  [hidden] { display: none !important; }

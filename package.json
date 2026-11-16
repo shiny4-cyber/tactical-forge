@@ -1,0 +1,13 @@
+{
+  "name": "cinder-yard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CINDER YARD: a round-based tactical FPS on three.js, built for a make.fun coding bounty.",
+  "license": "MIT",
+  "scripts": {
+    "serve": "node serve.ts",
+    "test": "node --test tests/*.test.mjs",
+    "build": "mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts"
+  }
+}
