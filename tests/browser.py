@@ -156,6 +156,15 @@ def main():
             time.sleep(0.3)
             check("clicking play hides the start screen", page.evaluate("() => document.getElementById('start').hidden") is True)
 
+            # The animation loop itself: the buy clock runs on its own and the scene draws
+            # without a hook driving it.
+            first = page.evaluate("() => window.__debug()['timer']")
+            time.sleep(1.4)
+            second = page.evaluate("() => window.__debug()['timer']")
+            check("the buy clock runs on the live loop", second < first, f"{first} -> {second}")
+            triangles = page.evaluate("() => window.__game.renderer.info.render.triangles")
+            check("the live loop is drawing the map", triangles > 2000, str(triangles))
+
             browser.close()
     finally:
         server.shutdown()
