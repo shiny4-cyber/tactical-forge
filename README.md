@@ -6,7 +6,9 @@ charge to one of two sites, the WARDENS hold them and defuse it. First to five r
 
 ![CINDER YARD](screenshots/1-cover.jpg)
 
-[![make.fun](https://img.shields.io/badge/make.fun-threejs--fps--01-ffb257)](https://make.fun/bounty/threejs-fps-01)
+[![make.fun · best-game-01](https://make.fun/badge/best-game-01.svg)](https://make.fun/bounty/best-game-01?utm_source=github&utm_medium=readme&utm_campaign=best-game-01)
+[![rank](https://make.fun/badge/best-game-01/shiny4-cyber/tactical-forge/rank.svg)](https://make.fun/bounty/best-game-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-game-01)
+[![reward](https://make.fun/badge/best-game-01/shiny4-cyber/tactical-forge/reward.svg)](https://make.fun/bounty/best-game-01?utm_source=github&utm_medium=readme&utm_campaign=best-game-01)
 [![license](https://img.shields.io/badge/license-MIT-6fd3e2)](LICENSE)
 
 ## Play it
