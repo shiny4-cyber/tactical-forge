@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CINDER YARD — a round-based tactical FPS</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="game"></div>
+
+<div id="hud">
+  <div class="topbar">
+    <div><span class="team packers">PACKERS</span><span class="score" id="hud-score-packers">0</span></div>
+    <div style="flex-direction: column; gap: 2px; padding: 4px 12px;"><span class="chip" id="hud-round">R1</span><span id="hud-timer">1:40</span></div>
+    <div><span class="score" id="hud-score-wardens">0</span><span class="team wardens">WARDENS</span></div>
+    <div><span class="chip" id="hud-phase">BUY PHASE</span></div>
+  </div>
+
+  <div class="leftcol">
+    <div class="row" id="hud-objective">PLANT AT SITE A OR B</div>
+    <div class="bomb" id="hud-bomb" hidden></div>
+  </div>
+
+  <div id="crosshair"><i></i><i></i><i></i><i></i></div>
+  <div id="hitmarker"><i></i><i></i><i></i><i></i></div>
+  <div id="vignette"></div>
+
+  <div class="vitals">
+    <div class="bar"><i id="hud-health-fill"></i></div>
+    <div class="labels"><span>HEALTH <b id="hud-health-text">100</b></span><span>ARMOUR <b id="hud-armor-text">0</b></span></div>
+    <div class="bar"><i id="hud-armor-fill" style="width:0%"></i></div>
+    <div id="hud-money">$800</div>
+    <div id="hud-stats">0K 0D · 0/0 HITS</div>
+  </div>
+
+  <div class="gunbox">
+    <div id="hud-weapon">KESTREL</div>
+    <div id="hud-ammo"><span id="hud-mag">30</span><span id="hud-reserve">/ 90</span></div>
+  </div>
+
+  <ul id="hud-feed"></ul>
+  <div id="banner" hidden><h2 id="banner-title"></h2><p id="banner-copy"></p></div>
+  <div id="dead" hidden><div style="text-align:center"><h2>ELIMINATED</h2><p>SPECTATING · THE ROUND PLAYS OUT</p></div></div>
+</div>
+
+<div id="buy" hidden>
+  <section class="panel" aria-label="Buy menu">
+    <header><h2>ARMOURY</h2><span id="buy-money">$800</span></header>
+    <ul id="buy-list">
+      <li data-item="kestrel"><span class="key">1</span><span><span class="name">KESTREL</span><span class="hint">rifle · 30 rounds · 4x head</span></span><span class="price">$2700</span></li>
+      <li data-item="tapper"><span class="key">2</span><span><span class="name">TAPPER</span><span class="hint">smg · 25 rounds · fastest fire</span></span><span class="price">$1250</span></li>
+      <li data-item="marrow"><span class="key">3</span><span><span class="name">MARROW</span><span class="hint">shotgun · 7 shells · 8 pellets</span></span><span class="price">$1800</span></li>
+      <li data-item="spark"><span class="key">4</span><span><span class="name">SPARK</span><span class="hint">pistol · 12 rounds · cheap</span></span><span class="price">$500</span></li>
+      <li data-item="pitch"><span class="key">5</span><span><span class="name">PITCH FRAG</span><span class="hint">grenade · G throws · one per round</span></span><span class="price">$300</span></li>
+      <li data-item="armor"><span class="key">6</span><span><span class="name">PLATE VEST</span><span class="hint">armour · soaks half of each hit</span></span><span class="price">$650</span></li>
+    </ul>
+    <footer>B OR ESC CLOSES · BUYING IS FREE-PHASE ONLY</footer>
+  </section>
+</div>
+
+<div id="start">
+  <section class="panel" aria-label="Start">
+    <h1>CINDER YARD</h1>
+    <p class="sub">KILN NINE · ROUND-BASED TACTICAL FPS</p>
+    <p id="start-copy">You are a PACKER: take a lane, plant the charge at A or B.</p>
+    <div class="sides">
+      <button type="button" data-side="attackers">PACKERS · ATTACK</button>
+      <button type="button" data-side="defenders">WARDENS · DEFEND</button>
+    </div>
+    <button id="start-button" type="button">CLICK TO PLAY</button>
+    <ul class="keys">
+      <li><kbd>WASD</kbd> move</li>
+      <li><kbd>Mouse</kbd> look</li>
+      <li><kbd>LMB</kbd> fire</li>
+      <li><kbd>R</kbd> reload</li>
+      <li><kbd>Ctrl</kbd> crouch</li>
+      <li><kbd>Shift</kbd> walk</li>
+      <li><kbd>Space</kbd> jump</li>
+      <li><kbd>B</kbd> buy menu</li>
+      <li><kbd>E</kbd> plant / defuse</li>
+      <li><kbd>G</kbd> grenade</li>
+      <li><kbd>M</kbd> mute</li>
+      <li><kbd>Esc</kbd> pause</li>
+    </ul>
+  </section>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.min.js"
+  }
+}
+</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
